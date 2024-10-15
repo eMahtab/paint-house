@@ -85,3 +85,23 @@ class Solution {
     }
 }
 ```
+
+# Implementation 2b : Since there are only three colors we can write it more concisely
+```java
+class Solution {
+    public int minCost(int[][] costs) {
+        int houses = costs.length;
+        int[] results = new int[3];
+        for(int color = 0; color < 3; color++)
+           results[color] = costs[0][color];
+        for(int house = 1; house < houses; house++) {
+            int[] current = new int[3];
+            current[0] = costs[house][0] + Math.min(results[1], results[2]);
+            current[1] = costs[house][1] + Math.min(results[0], results[2]);
+            current[2] = costs[house][2] + Math.min(results[0], results[1]);
+            results = current;
+        }
+        return Math.min(Math.min(results[0], results[1]), results[2]); 
+    }
+}
+```
