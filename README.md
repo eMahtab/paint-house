@@ -27,3 +27,31 @@ Output: 2
 2. costs[i].length == 3
 3. 1 <= n <= 100
 4. 1 <= costs[i][j] <= 20
+
+## Implementation 1 : DP
+```java
+class Solution {
+    public int minCost(int[][] costs) {
+        int houses = costs.length;
+        int[][] grid = new int[houses][3];
+        for(int color = 0; color < 3; color++)
+           grid[0][color] = costs[0][color];
+        for(int house = 1; house < houses; house++) {
+            for(int color = 0; color < 3; color++) {
+                 int cost = costs[house][color];
+                 if(color == 0)
+                    cost += Math.min(grid[house-1][1], grid[house-1][2]);
+                 else if(color == 1)
+                    cost += Math.min(grid[house-1][0], grid[house-1][2]);
+                 else
+                    cost += Math.min(grid[house-1][0], grid[house-1][1]);
+                 
+                 grid[house][color] = cost;     
+            }
+        }
+        int minCost = Math.min(grid[houses-1][0], grid[houses-1][1]);
+        minCost = Math.min(minCost, grid[houses-1][2]);
+        return minCost; 
+    }
+}
+```
