@@ -28,7 +28,7 @@ Output: 2
 3. 1 <= n <= 100
 4. 1 <= costs[i][j] <= 20
 
-## Implementation 1 : DP
+## Implementation 1 : DP Runtime = O(n), Space = O(n) where n = houses * colors 
 ```java
 class Solution {
     public int minCost(int[][] costs) {
