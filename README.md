@@ -28,7 +28,7 @@ Output: 2
 3. 1 <= n <= 100
 4. 1 <= costs[i][j] <= 20
 
-## Implementation 1 : DP Runtime = O(n), Space = O(n) where n = houses * colors 
+## Implementation 1a : DP Runtime = O(n), Space = O(n) where n = houses * colors 
 ```java
 class Solution {
     public int minCost(int[][] costs) {
@@ -51,6 +51,36 @@ class Solution {
         }
         int minCost = Math.min(grid[houses-1][0], grid[houses-1][1]);
         minCost = Math.min(minCost, grid[houses-1][2]);
+        return minCost; 
+    }
+}
+```
+
+## Implementation 2a : DP, Space Optimized , Runtime = O(n), Space = O(1) where n = houses * colors
+```java
+class Solution {
+    public int minCost(int[][] costs) {
+        int houses = costs.length;
+        int[] results = new int[3];
+        for(int color = 0; color < 3; color++)
+           results[color] = costs[0][color];
+        for(int house = 1; house < houses; house++) {
+            int[] current = new int[3];
+            for(int color = 0; color < 3; color++) {
+                 int cost = costs[house][color];
+                 if(color == 0)
+                    cost += Math.min(results[1], results[2]);
+                 else if(color == 1)
+                    cost += Math.min(results[0], results[2]);
+                 else
+                    cost += Math.min(results[0], results[1]);
+                 
+                 current[color] = cost;     
+            }
+            results = current;
+        }
+        int minCost = Math.min(results[0], results[1]);
+        minCost = Math.min(minCost, results[2]);
         return minCost; 
     }
 }
